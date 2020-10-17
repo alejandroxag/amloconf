@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![License:
-MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+\[\[License: MIT\](<https://img.shields>.
 
 ![](https://img.shields.io/badge/last%20change-October%2017,%202020-yellowgreen.svg)
 
@@ -33,7 +32,7 @@ devtools::install_github("alejandroxag/amloconf")
 <!-- This is a basic example which shows you how to solve a common problem: -->
 
 ``` r
-library(amloconf)
+# library(amloconf)
 ## basic example code
 ```
 
