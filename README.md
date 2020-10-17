@@ -5,10 +5,8 @@
 
 <!-- badges: start -->
 
-\[\[License: MIT\](<https://img.shields>.
-
+![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
 ![](https://img.shields.io/badge/last%20change-October%2017,%202020-yellowgreen.svg)
-
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
