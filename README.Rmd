@@ -23,7 +23,9 @@ knitr::opts_chunk$set(
 
 The purpose of ``amloconf`` is to provide a tool to retrieve the stenographic
 versions of the conferences given by the Mexican President, Andrés Manuel López Obrador,
-in handy-dialog-formatted lists.
+in handy-dialog-formatted lists. 
+
+This tool could be useful to carry out text mining and sentiment analysis on the Mexican President's press conferences.
 
 ## Installation
 
