@@ -39,8 +39,8 @@ devtools::install_github("alejandroxag/amloconf")
 
 <!-- This is a basic example which shows you how to solve a common problem: -->
 
-```{r example,eval=FALSE}
-# library(amloconf)
+```{r example}
+library(amloconf)
 ## basic example code
 ```
 
