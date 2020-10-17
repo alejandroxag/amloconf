@@ -1,3 +1,25 @@
+#' URLs Parsing
+#'
+#' The website https://presidente.gob.mx/secciones/version-estenografica/
+#' stores the URLs pointing to the stenographic versions of the presidential
+#' conferences in several pages.
+#' URLs stored in the page n, will be retrieved from the URL
+#' https://presidente.gob.mx/secciones/version-estenografica/page/n/
+#'
+#' @param page
+#' An numeric value to be passed to call
+#' glue::glue('https://presidente.gob.mx/secciones/version-estenografica/page/\{page\}/').
+
+#'
+#' @return urls_list, a character vector containing all the urls stored in the selected page.
+#' @export urls_parsing
+#' @examples
+#' # To retrieve all the URLs located in the page five in
+#' # 'https://presidente.gob.mx/secciones/version-estenografica/page/5/',
+#' # call:
+#'
+#' urls_parsing(5)
+
 urls_parsing <- function(page){
 
     if (!is.numeric(page)) stop('Please provide an integer value for page argument.')
@@ -22,8 +44,6 @@ urls_parsing <- function(page){
                 unlist() %>%
                 purrr::set_names(stringr::str_remove(names(.),'.href'))
 
-            suppressWarnings(closeAllConnections())
-
             return(urls_list)
         },
         error = function(cond) {
@@ -31,7 +51,5 @@ urls_parsing <- function(page){
             message(cond)
         }
     )
-
-
-
+    suppressWarnings(closeAllConnections())
 }
