@@ -1,12 +1,28 @@
-#' Title
+#' Find URLs
+#'
+#' Finds URLs corresponding to specific dates.
 #'
 #' @param dates
-#' @param s_ad_fct
+#' A date value or vector in the format 'yyyy-mm-dd'
+#' (either of Date or character class), between 04/12/2018 and today,
+#' both inclusive. When the date is not found, or there is an
+#' inconsistency in that days' conference, it throws a warning.
 #'
-#' @return
+#' @param s_ad_fct
+#' A numeric value to adjust the scope of the dates' search through
+#' the pages in the main website of the conferences.
+#'
+#' @return A character vector containing the URLs corresponding to the selected
+#' dates.
 #' @export
 #'
 #' @examples
+#' urls <- find_urls('2020-10-06')
+#' urls <- find_urls(c('2020-10-06','2020-08-19'))
+#' dates <- seq(lubridate::ymd('2020-10-01'),
+#'              lubridate::ymd('2020-10-16'),
+#'              by = 'day')
+#' urls <- find_urls(dates)
 find_urls <- function(dates = NULL, s_ad_fct = 1.25) {
 
     urls_list <- list()
@@ -22,7 +38,7 @@ find_urls <- function(dates = NULL, s_ad_fct = 1.25) {
 
         for (date_i in as.list(dates)) {
 
-            cond1 <- (base::max(dates_final_set) >= date_i & date_i >= base::min(dates_final_set)) | date_i > today
+            suppressWarnings(cond1 <- (base::max(dates_final_set) >= date_i & date_i >= base::min(dates_final_set)) | date_i > today)
             if (cond1) {
             } else {
 
@@ -61,11 +77,10 @@ find_urls <- function(dates = NULL, s_ad_fct = 1.25) {
             }
         }
 
-        pages <- c(pages, base::min(pages) - 1, base::max(pages) + 1)
+        for (p in pages) pages <- c(pages, p - 1, p + 1)
         pages <- sort(unique(pages[pages > 0]))
 
         urls_list <- unlist(purrr::map(pages, ~ tryCatch(urls_parsing(.),error = function(e) {})))
-
         return(urls_list[names(urls_list) %in% as.character(dates)])
 
     } else {

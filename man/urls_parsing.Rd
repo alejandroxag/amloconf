@@ -7,11 +7,11 @@
 urls_parsing(page)
 }
 \arguments{
-\item{page}{An numeric value to be passed to call
+\item{page}{A numeric value to be passed to call
 glue::glue('https://presidente.gob.mx/secciones/version-estenografica/page/\{page\}/').}
 }
 \value{
-urls_list, a character vector containing all the urls stored in the selected page.
+A character vector containing all the urls stored in the selected page.
 }
 \description{
 The website https://presidente.gob.mx/secciones/version-estenografica/
@@ -25,5 +25,5 @@ https://presidente.gob.mx/secciones/version-estenografica/page/n/
 # 'https://presidente.gob.mx/secciones/version-estenografica/page/5/',
 # call:
 
-urls_parsing(5)
+urls <- urls_parsing(5)
 }
