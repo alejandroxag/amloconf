@@ -7,18 +7,18 @@
 #' https://presidente.gob.mx/secciones/version-estenografica/page/n/
 #'
 #' @param page
-#' An numeric value to be passed to call
+#' A numeric value to be passed to call
 #' glue::glue('https://presidente.gob.mx/secciones/version-estenografica/page/\{page\}/').
 
 #'
-#' @return urls_list, a character vector containing all the urls stored in the selected page.
+#' @return A character vector containing all the urls stored in the selected page.
 #' @export urls_parsing
 #' @examples
 #' # To retrieve all the URLs located in the page five in
 #' # 'https://presidente.gob.mx/secciones/version-estenografica/page/5/',
 #' # call:
 #'
-#' urls_parsing(5)
+#' urls <- urls_parsing(5)
 
 urls_parsing <- function(page){
 
