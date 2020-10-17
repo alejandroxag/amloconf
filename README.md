@@ -7,44 +7,35 @@
 
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
 ![](https://img.shields.io/badge/last%20change-October%2017,%202020-yellowgreen.svg)
+
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of amloconf is to …
+The purpose of `amloconf` is to provide a tool to retrieve the
+stenographic versions of the conferences given by the Mexican President,
+Andrés Manuel López Obrador, in handy-dialog-formatted lists.
 
-<!-- ## Installation -->
+## Installation
 
-<!-- You can install the released version of amloconf from [CRAN](https://CRAN.R-project.org) with: -->
+You can install the development version from
+[GitHub](https://github.com/) with:
 
-<!-- ``` r -->
+``` r
+# install.packages("devtools")
+devtools::install_github("alejandroxag/amloconf")
+```
 
-<!-- install.packages("amloconf") -->
-
-<!-- ``` -->
-
-<!-- And the development version from [GitHub](https://github.com/) with: -->
-
-<!-- ``` r -->
-
-<!-- # install.packages("devtools") -->
-
-<!-- devtools::install_github("alejandroxag/amloconf") -->
-
-<!-- ``` -->
-
-<!-- ## Example -->
+## Example
 
 <!-- This is a basic example which shows you how to solve a common problem: -->
 
-<!-- ```{r example} -->
-
-<!-- library(amloconf) -->
-
-<!-- ## basic example code -->
-
-<!-- ``` -->
+``` r
+library(amloconf)
+## basic example code
+```
 
 <!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so: -->
 
