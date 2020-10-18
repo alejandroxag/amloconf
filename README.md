@@ -29,6 +29,9 @@ You can install the development version from
 library(amloconf)
 ```
 
+If it asks for updates of other packages, the better thing to do is to
+choose the ‘None’ option (pressing number 3 on the keyboard).
+
 ## Usage
 
 The `amloconf` package includes three functions: `urls_parsing`,
