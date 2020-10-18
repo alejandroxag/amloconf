@@ -18,4 +18,6 @@ Imports:
     rvest,
     stringr,
     xml2,
-    magrittr
+    magrittr,
+    dplyr,
+    tidyr
