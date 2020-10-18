@@ -51,7 +51,7 @@
 #  conferences <- text_extraction(end = '2020-10-17')
 #  conferences <- text_extraction(start = '2020-10-10',
 #                               end = '2020-10-17')
-#  conferences <- text_extraction()
+#  # conferences <- text_extraction()
 text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL) {
 
     bool <- FALSE
