@@ -8,7 +8,7 @@ find_urls(dates = NULL, s_ad_fct = 1.25)
 }
 \arguments{
 \item{dates}{A date value or vector in the format 'yyyy-mm-dd'
-(either of Date or character class), between 04/12/2018 and today,
+(either of Date or character class), between 04/12/2018 and the present date,
 both inclusive. When the date is not found, or there is an
 inconsistency in that days' conference, it throws a warning.}
 
