@@ -42,18 +42,19 @@
 #'
 #' @examples
 #' conferences <- text_extraction(dates = c('2020-10-17','2020-10-10'))
-#' #dates <- seq(lubridate::ymd('2020-10-01'),
-#' #             lubridate::ymd('2020-10-16'),
-#' #             by = 'day')
-#' #urls <- find_urls(dates)
-#' #conferences <- text_extraction(urls = urls)
-#' #conferences <- text_extraction(start = '2020-10-10')
-#' #conferences <- text_extraction(end = '2020-10-17')
-#' #conferences <- text_extraction(start = '2020-10-10',
-#' #                               end = '2020-10-17')
-#' #conferences <- text_extraction()
+#  dates <- seq(lubridate::ymd('2020-10-01'),
+#             lubridate::ymd('2020-10-16'),
+#             by = 'day')
+#  urls <- find_urls(dates)
+#  conferences <- text_extraction(urls = urls)
+#  conferences <- text_extraction(start = '2020-10-10')
+#  conferences <- text_extraction(end = '2020-10-17')
+#  conferences <- text_extraction(start = '2020-10-10',
+#                               end = '2020-10-17')
+#  conferences <- text_extraction()
 text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL) {
 
+    bool <- FALSE
     if (!purrr::is_null(urls) & (!purrr::is_null(dates) | !purrr::is_null(start) | !purrr::is_null(end))) {
         message('Error: please define either dates (dates/start/end) or urls.')
     } else{
@@ -66,7 +67,10 @@ text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL)
             if (!purrr::is_null(start) & purrr::is_null(end)) dates <- seq(lubridate::ymd(start),Sys.Date(), by = 'days')
             if (purrr::is_null(start) & !purrr::is_null(end)) dates <- seq(lubridate::ymd('2018-12-04'),lubridate::ymd(end), by = 'days')
             if (!purrr::is_null(dates)) urls <- find_urls(dates)
-            if (!purrr::is_null(urls)) urls <- c(urls)
+            if (!purrr::is_null(urls)) {
+                urls <- c(urls)
+                bool <- TRUE
+            }
             if (purrr::is_null(dates) & purrr::is_null(urls) & purrr::is_null(start) & purrr::is_null(end)) urls <- find_urls()
 
             dialogs <- list()
@@ -110,7 +114,7 @@ text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL)
                             purrr::map_chr(~ .)
 
                         names(out_dialog) <- interlocutors
-                        if (purrr::is_null(urls)) {
+                        if (!bool) {
                             date_url <- names(urls[urls == url])
                             if(prev_date == date_url) count <- count + 1
                             date_name <- paste(date_url, count, sep = '_')

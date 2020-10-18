@@ -44,14 +44,4 @@ the parameter must be specified when calling this function.
 }
 \examples{
 conferences <- text_extraction(dates = c('2020-10-17','2020-10-10'))
-#dates <- seq(lubridate::ymd('2020-10-01'),
-#             lubridate::ymd('2020-10-16'),
-#             by = 'day')
-#urls <- find_urls(dates)
-#conferences <- text_extraction(urls = urls)
-#conferences <- text_extraction(start = '2020-10-10')
-#conferences <- text_extraction(end = '2020-10-17')
-#conferences <- text_extraction(start = '2020-10-10',
-#                               end = '2020-10-17')
-#conferences <- text_extraction()
 }

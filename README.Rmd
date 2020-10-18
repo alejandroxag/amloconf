@@ -49,7 +49,7 @@ It mainly serves as an auxiliary function to ``find_urls``, but could be useful
 to retrieve URLs subsets with unclear start or end dates, so the argument
 ``page`` can be used instead.
 
-```{r urls_parsing}
+```{r urls_parsing, eval=FALSE}
 n <- 5
 urls <- urls_parsing(page = n)
 urls
@@ -66,7 +66,7 @@ hosting the press conferences has many pages, it's faster to get the URLs using
 this function than clicking the next/previous buttons at the bottom of the 
 website.
 
-```{r find_urls, warning=FALSE}
+```{r find_urls, warning=FALSE, eval=FALSE}
 dates <- seq(lubridate::ymd('2020-10-01'),
              lubridate::ymd('2020-10-16'),
              by = 'day')
@@ -80,7 +80,7 @@ urls
 in the arguments, in a dialog-formatted list. See ``text_extraction`` for further
 details. This function is the main of this package, since it can be used to 
 retrieve the conferences in ready-to-use format.
-```{r text_extraction, warning=FALSE,message=FALSE}
-# conferences <- text_extraction(start = '2020-10-12', end = '2020-10-16')
-# conferences
+```{r text_extraction, warning=FALSE, message=FALSE, eval = FALSE}
+conferences <- text_extraction(dates = '2020-10-16')
+conferences
 ```
