@@ -70,7 +70,7 @@ text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL)
             if (purrr::is_null(dates) & purrr::is_null(urls) & purrr::is_null(start) & purrr::is_null(end)) urls <- find_urls()
 
             dialogs <- list()
-            prev_date <- ''
+            prev_date <- 'a'
             count <- 1
 
             for (url in urls){
@@ -91,7 +91,7 @@ text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL)
 
                         if (length(which(stringr::str_detect(stringr::str_sub(text_conf, 1, 2), '^[:upper:]+$'))) == 0) {
                             idxs <- c(1)
-                            text_conf[1] <- glue::glue('PRESIDENTE ANDRÉS MANUEL LÓPEZ OBRADOR: {text_conf[1]}')
+                            text_conf[1] <- glue::glue('PRESIDENTE ANDRES MANUEL LOPEZ OBRADOR: {text_conf[1]}')
                         } else {
                             idxs <- which(stringr::str_detect(stringr::str_sub(text_conf, 1, 2), '^[:upper:]+$'))
                         }
