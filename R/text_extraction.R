@@ -74,7 +74,7 @@ text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL)
             if (purrr::is_null(dates) & purrr::is_null(urls) & purrr::is_null(start) & purrr::is_null(end)) urls <- find_urls()
 
             dialogs <- list()
-            prev_date <- 'a'
+            prev_date <- ''
             count <- 1
 
             for (url in urls){

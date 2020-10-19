@@ -84,7 +84,7 @@ urls
 in the arguments, in a dialog-formatted list. See ``text_extraction`` for further
 details. This function is the main of this package, since it can be used to 
 retrieve the conferences in ready-to-use format.
-```{r text_extraction, warning=FALSE, message=FALSE, eval = FALSE}
+```{r text_extraction, warning=FALSE, message=FALSE, eval=FALSE}
 conferences <- text_extraction(dates = '2020-10-16')
-conferences
+conferences[1:10]
 ```

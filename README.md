@@ -81,5 +81,5 @@ ready-to-use format.
 
 ``` r
 conferences <- text_extraction(dates = '2020-10-16')
-conferences
+conferences[1:10]
 ```
