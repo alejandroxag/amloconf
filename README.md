@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
-![](https://img.shields.io/badge/last%20change-October%2018,%202020-yellowgreen.svg)
+![](https://img.shields.io/badge/last%20change-October%2019,%202020-yellowgreen.svg)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->

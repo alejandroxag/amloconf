@@ -54,88 +54,84 @@
 #' # conferences <- text_extraction()
 text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL) {
 
-    bool <- FALSE
-    if (!purrr::is_null(urls) & (!purrr::is_null(dates) | !purrr::is_null(start) | !purrr::is_null(end))) {
-        message('Error: please define either dates (dates/start/end) or urls.')
-    } else{
+    if (!purrr::is_null(urls) & (!purrr::is_null(dates) | !purrr::is_null(start) | !purrr::is_null(end)))
+        stop('Please define either dates (dates/start/end) or urls.')
+    if (!purrr::is_null(dates) & (!purrr::is_null(start) | !purrr::is_null(end)) & purrr::is_null(urls))
+        stop('Please enter either a vector of dates, or start/end dates.')
+    if (!purrr::is_null(dates) & (!purrr::is_null(start) | !purrr::is_null(end)) & purrr::is_null(urls))
+        stop('Please enter either a vector of dates, or start/end dates.')
+    if (!purrr::is_null(start) & !purrr::is_null(end))
+        if (start > end) stop('start date has to be equal or previous to the end date.')
 
-        if (!purrr::is_null(dates) & (!purrr::is_null(start) | !purrr::is_null(end)) & purrr::is_null(urls)) {
-            message('Error: please enter either a vector of dates, or start/end dates.')
-        } else{
+    if (!purrr::is_null(start) & !purrr::is_null(end)) dates <- seq(lubridate::ymd(start),lubridate::ymd(end), by = 'days')
+    if (!purrr::is_null(start) & purrr::is_null(end)) dates <- seq(lubridate::ymd(start),Sys.Date(), by = 'days')
+    if (purrr::is_null(start) & !purrr::is_null(end)) dates <- seq(lubridate::ymd('2018-12-04'),lubridate::ymd(end), by = 'days')
+    if (!purrr::is_null(dates)) urls <- find_urls(dates)
+    if (!purrr::is_null(urls)) urls <- c(urls)
+    if (purrr::is_null(dates) & purrr::is_null(urls) & purrr::is_null(start) & purrr::is_null(end)) urls <- find_urls()
 
-            if (!purrr::is_null(start) & !purrr::is_null(end)) dates <- seq(lubridate::ymd(start),lubridate::ymd(end), by = 'days')
-            if (!purrr::is_null(start) & purrr::is_null(end)) dates <- seq(lubridate::ymd(start),Sys.Date(), by = 'days')
-            if (purrr::is_null(start) & !purrr::is_null(end)) dates <- seq(lubridate::ymd('2018-12-04'),lubridate::ymd(end), by = 'days')
-            if (!purrr::is_null(dates)) urls <- find_urls(dates)
-            if (!purrr::is_null(urls)) {
-                urls <- c(urls)
-                bool <- TRUE
-            }
-            if (purrr::is_null(dates) & purrr::is_null(urls) & purrr::is_null(start) & purrr::is_null(end)) urls <- find_urls()
+    dialogs <- list()
+    prev_date <- ''
+    idx <- 1
+    count <- 0
 
-            dialogs <- list()
-            prev_date <- ''
-            count <- 1
+    for (url in urls){
 
-            for (url in urls){
+        count <- count + 1
 
-                if (purrr::is_null(urls)) count <- 1
+        tryCatch(
+            {
+                print(glue::glue('Trying to parse url: {url}'))
+                text_conf <- xml2::read_html(url) %>%
+                    rvest::html_nodes('p') %>%
+                    rvest::html_text() %>%
+                    .[dplyr::if_else(is.na(dplyr::first(which(stringr::str_detect(stringr::str_sub(., 2, 3), '^[:upper:]+$')))),
+                                     as.integer(1),
+                                     dplyr::first(which(stringr::str_detect(stringr::str_sub(., 2, 3), '^[:upper:]+$')))):(dplyr::last(which(stringr::str_detect(., '---|- - -|Copyright|t.'))) - 1)] %>%
+                    purrr::keep(function(x) stringr::str_length(x) > 0) %>%
+                    stringr::str_remove('-')
 
-                tryCatch(
-                    {
-                        print(glue::glue('Trying to parse url: {url}'))
-                        text_conf <- xml2::read_html(url) %>%
-                            rvest::html_nodes('p') %>%
-                            rvest::html_text() %>%
-                            .[dplyr::if_else(is.na(dplyr::first(which(stringr::str_detect(stringr::str_sub(., 2, 3), '^[:upper:]+$')))),
-                                             as.integer(1),
-                                             dplyr::first(which(stringr::str_detect(stringr::str_sub(., 2, 3), '^[:upper:]+$')))):(dplyr::last(which(stringr::str_detect(., '---|- - -|Copyright|t.'))) - 1)] %>%
-                            purrr::keep(function(x) stringr::str_length(x) > 0) %>%
-                            stringr::str_remove('-')
+                if (length(which(stringr::str_detect(stringr::str_sub(text_conf, 1, 2), '^[:upper:]+$'))) == 0) {
+                    idxs <- c(1)
+                    text_conf[1] <- glue::glue('PRESIDENTE ANDRES MANUEL LOPEZ OBRADOR: {text_conf[1]}')
+                } else {
+                    idxs <- which(stringr::str_detect(stringr::str_sub(text_conf, 1, 2), '^[:upper:]+$'))
+                }
 
-                        if (length(which(stringr::str_detect(stringr::str_sub(text_conf, 1, 2), '^[:upper:]+$'))) == 0) {
-                            idxs <- c(1)
-                            text_conf[1] <- glue::glue('PRESIDENTE ANDRES MANUEL LOPEZ OBRADOR: {text_conf[1]}')
-                        } else {
-                            idxs <- which(stringr::str_detect(stringr::str_sub(text_conf, 1, 2), '^[:upper:]+$'))
-                        }
-
-                        out_dialog <- purrr::map2(
-                            idxs, tidyr::replace_na(dplyr::lead(idxs), length(text_conf) + 1),
-                            ~ glue::glue_collapse(text_conf[seq(.x, .y - 1)], '\n')
-                        )
-
-                        interlocutors <- out_dialog %>%
-                            purrr::map(~ stringr::str_sub(.,
-                                                          stringr::str_locate(.,'[:upper:]')[1],
-                                                          stringr::str_locate(.,'[:lower:]')[1] - 3)) %>%
-                            purrr::map(~ stringr::str_remove_all(.,':')) %>%
-                            purrr::map(stringr::str_trim) %>%
-                            purrr::map_chr(~ .)
-
-                        names(out_dialog) <- interlocutors
-                        if (!bool) {
-                            date_url <- names(urls[urls == url])
-                            if(prev_date == date_url) count <- count + 1
-                            date_name <- paste(date_url, count, sep = '_')
-                            dialogs[[date_name]] <- out_dialog
-                            prev_date <- date_url
-                        } else {
-                            dialogs[[count]] <- out_dialog
-                            count <- count + 1
-                        }
-                    },
-                    error = function(e){
-                        print(e)
-                        message(glue::glue('Error: cannot read url {url}'))
-
-                        return(list(failed_to_parse = url))
-                    }
+                out_dialog <- purrr::map2(
+                    idxs, tidyr::replace_na(dplyr::lead(idxs), length(text_conf) + 1),
+                    ~ glue::glue_collapse(text_conf[seq(.x, .y - 1)], '\n')
                 )
-            }
 
-            # suppressWarnings(closeAllConnections())
-            return(dialogs)
-        }
+                interlocutors <- out_dialog %>%
+                    purrr::map(~ stringr::str_sub(.,
+                                                  stringr::str_locate(.,'[:upper:]')[1],
+                                                  stringr::str_locate(.,'[:lower:]')[1] - 3)) %>%
+                    purrr::map(~ stringr::str_remove_all(.,':')) %>%
+                    purrr::map(stringr::str_trim) %>%
+                    purrr::map_chr(~ .)
+
+                names(out_dialog) <- interlocutors
+                if (!purrr::is_null(names(urls))) {
+                    date_url <- names(urls[urls == url])
+                    if (date_url == prev_date) idx <- idx + 1
+                    else idx <- 1
+                    prev_date <- date_url
+                    date_name <- paste(date_url,idx,sep = '..')
+                } else date_name <- count
+
+                dialogs[[date_name]] <- out_dialog
+            },
+            error = function(e){
+                print(e)
+                message(glue::glue('Error: cannot read url {url}'))
+
+                return(list(failed_to_parse = url))
+            }
+        )
     }
+
+    return(dialogs)
+    suppressWarnings(closeAllConnections())
+
 }
