@@ -134,7 +134,7 @@ text_extraction <- function(dates = NULL, urls = NULL, start = NULL, end = NULL)
                 )
             }
 
-            suppressWarnings(closeAllConnections())
+            # suppressWarnings(closeAllConnections())
             return(dialogs)
         }
     }

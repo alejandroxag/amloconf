@@ -97,4 +97,6 @@ find_urls <- function(dates = NULL, s_ad_fct = 1.25) {
 
         return(unlist(urls_list))
     }
+
+    # suppressWarnings(closeAllConnections())
 }
