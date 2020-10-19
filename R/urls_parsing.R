@@ -51,5 +51,5 @@ urls_parsing <- function(page){
             message(cond)
         }
     )
-    suppressWarnings(closeAllConnections())
+    # suppressWarnings(closeAllConnections())
 }
