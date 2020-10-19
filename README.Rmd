@@ -25,7 +25,7 @@ The purpose of ``amloconf`` is to provide a tool to retrieve the stenographic
 versions of the conferences given by the Mexican President, Andrés Manuel López Obrador,
 in handy-dialog-formatted lists. 
 
-This tool could be useful to carry out text mining and sentiment analysis on the Mexican President's press conferences.
+This tool could help carry out text mining and sentiment analysis on the Mexican President's press conferences. This package aims to ease the access to such press conferences to anyone willing to analyze them using the R framework. Hence, this package's purpose is entirely objective. Any claim, result, or work based on the information retrieved through this package is the complete responsibility of the author of such work and not the author of this package.
 
 ## Installation
 
