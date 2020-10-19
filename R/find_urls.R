@@ -98,9 +98,5 @@ find_urls <- function(dates = NULL, s_ad_fct = 1.25) {
         return(unlist(urls_list))
     }
 
-<<<<<<< HEAD
-    # suppressWarnings(closeAllConnections())
-=======
     suppressWarnings(closeAllConnections())
->>>>>>> bfbbd64e068a859348f832f69ae98926e387f4fb
 }
